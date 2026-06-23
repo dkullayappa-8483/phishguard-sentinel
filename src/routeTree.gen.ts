@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiThreatIntelRouteImport } from './routes/api/threat-intel'
 import { Route as ApiCheckUrlRouteImport } from './routes/api/check-url'
 import { Route as ApiCheckEmailRouteImport } from './routes/api/check-email'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiThreatIntelRoute = ApiThreatIntelRouteImport.update({
+  id: '/api/threat-intel',
+  path: '/api/threat-intel',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiCheckUrlRoute = ApiCheckUrlRouteImport.update({
@@ -33,30 +39,39 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
+  '/api/threat-intel': typeof ApiThreatIntelRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
+  '/api/threat-intel': typeof ApiThreatIntelRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
+  '/api/threat-intel': typeof ApiThreatIntelRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/check-email' | '/api/check-url'
+  fullPaths: '/' | '/api/check-email' | '/api/check-url' | '/api/threat-intel'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/check-email' | '/api/check-url'
-  id: '__root__' | '/' | '/api/check-email' | '/api/check-url'
+  to: '/' | '/api/check-email' | '/api/check-url' | '/api/threat-intel'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/check-email'
+    | '/api/check-url'
+    | '/api/threat-intel'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiCheckEmailRoute: typeof ApiCheckEmailRoute
   ApiCheckUrlRoute: typeof ApiCheckUrlRoute
+  ApiThreatIntelRoute: typeof ApiThreatIntelRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,6 +81,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/threat-intel': {
+      id: '/api/threat-intel'
+      path: '/api/threat-intel'
+      fullPath: '/api/threat-intel'
+      preLoaderRoute: typeof ApiThreatIntelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/check-url': {
@@ -89,6 +111,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiCheckEmailRoute: ApiCheckEmailRoute,
   ApiCheckUrlRoute: ApiCheckUrlRoute,
+  ApiThreatIntelRoute: ApiThreatIntelRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
