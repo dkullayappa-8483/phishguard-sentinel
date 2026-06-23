@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiCheckUrlRouteImport } from './routes/api/check-url'
+import { Route as ApiCheckEmailRouteImport } from './routes/api/check-email'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const ApiCheckUrlRoute = ApiCheckUrlRouteImport.update({
   path: '/api/check-url',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiCheckEmailRoute = ApiCheckEmailRouteImport.update({
+  id: '/api/check-email',
+  path: '/api/check-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/check-url'
+  fullPaths: '/' | '/api/check-email' | '/api/check-url'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/check-url'
-  id: '__root__' | '/' | '/api/check-url'
+  to: '/' | '/api/check-email' | '/api/check-url'
+  id: '__root__' | '/' | '/api/check-email' | '/api/check-url'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiCheckEmailRoute: typeof ApiCheckEmailRoute
   ApiCheckUrlRoute: typeof ApiCheckUrlRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCheckUrlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/check-email': {
+      id: '/api/check-email'
+      path: '/api/check-email'
+      fullPath: '/api/check-email'
+      preLoaderRoute: typeof ApiCheckEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiCheckEmailRoute: ApiCheckEmailRoute,
   ApiCheckUrlRoute: ApiCheckUrlRoute,
 }
 export const routeTree = rootRouteImport
