@@ -9,38 +9,214 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as LearnRouteImport } from './routes/learn'
+import { Route as HistoryRouteImport } from './routes/history'
+import { Route as EmailRouteImport } from './routes/email'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as BookmarkletRouteImport } from './routes/bookmarklet'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiThreatIntelRouteImport } from './routes/api/threat-intel'
+import { Route as ApiCheckUrlRouteImport } from './routes/api/check-url'
+import { Route as ApiCheckEmailRouteImport } from './routes/api/check-email'
+import { Route as ApiPublicReportRouteImport } from './routes/api/public/report'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmailRoute = EmailRouteImport.update({
+  id: '/email',
+  path: '/email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookmarkletRoute = BookmarkletRouteImport.update({
+  id: '/bookmarklet',
+  path: '/bookmarklet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiThreatIntelRoute = ApiThreatIntelRouteImport.update({
+  id: '/api/threat-intel',
+  path: '/api/threat-intel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCheckUrlRoute = ApiCheckUrlRouteImport.update({
+  id: '/api/check-url',
+  path: '/api/check-url',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCheckEmailRoute = ApiCheckEmailRouteImport.update({
+  id: '/api/check-email',
+  path: '/api/check-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicReportRoute = ApiPublicReportRouteImport.update({
+  id: '/api/public/report',
+  path: '/api/public/report',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bookmarklet': typeof BookmarkletRoute
+  '/dashboard': typeof DashboardRoute
+  '/email': typeof EmailRoute
+  '/history': typeof HistoryRoute
+  '/learn': typeof LearnRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/check-email': typeof ApiCheckEmailRoute
+  '/api/check-url': typeof ApiCheckUrlRoute
+  '/api/threat-intel': typeof ApiThreatIntelRoute
+  '/api/public/report': typeof ApiPublicReportRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bookmarklet': typeof BookmarkletRoute
+  '/dashboard': typeof DashboardRoute
+  '/email': typeof EmailRoute
+  '/history': typeof HistoryRoute
+  '/learn': typeof LearnRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/check-email': typeof ApiCheckEmailRoute
+  '/api/check-url': typeof ApiCheckUrlRoute
+  '/api/threat-intel': typeof ApiThreatIntelRoute
+  '/api/public/report': typeof ApiPublicReportRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bookmarklet': typeof BookmarkletRoute
+  '/dashboard': typeof DashboardRoute
+  '/email': typeof EmailRoute
+  '/history': typeof HistoryRoute
+  '/learn': typeof LearnRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/check-email': typeof ApiCheckEmailRoute
+  '/api/check-url': typeof ApiCheckUrlRoute
+  '/api/threat-intel': typeof ApiThreatIntelRoute
+  '/api/public/report': typeof ApiPublicReportRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/bookmarklet'
+    | '/dashboard'
+    | '/email'
+    | '/history'
+    | '/learn'
+    | '/sitemap.xml'
+    | '/api/check-email'
+    | '/api/check-url'
+    | '/api/threat-intel'
+    | '/api/public/report'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/bookmarklet'
+    | '/dashboard'
+    | '/email'
+    | '/history'
+    | '/learn'
+    | '/sitemap.xml'
+    | '/api/check-email'
+    | '/api/check-url'
+    | '/api/threat-intel'
+    | '/api/public/report'
+  id:
+    | '__root__'
+    | '/'
+    | '/bookmarklet'
+    | '/dashboard'
+    | '/email'
+    | '/history'
+    | '/learn'
+    | '/sitemap.xml'
+    | '/api/check-email'
+    | '/api/check-url'
+    | '/api/threat-intel'
+    | '/api/public/report'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BookmarkletRoute: typeof BookmarkletRoute
+  DashboardRoute: typeof DashboardRoute
+  EmailRoute: typeof EmailRoute
+  HistoryRoute: typeof HistoryRoute
+  LearnRoute: typeof LearnRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiCheckEmailRoute: typeof ApiCheckEmailRoute
+  ApiCheckUrlRoute: typeof ApiCheckUrlRoute
+  ApiThreatIntelRoute: typeof ApiThreatIntelRoute
+  ApiPublicReportRoute: typeof ApiPublicReportRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/email': {
+      id: '/email'
+      path: '/email'
+      fullPath: '/email'
+      preLoaderRoute: typeof EmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bookmarklet': {
+      id: '/bookmarklet'
+      path: '/bookmarklet'
+      fullPath: '/bookmarklet'
+      preLoaderRoute: typeof BookmarkletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +224,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/threat-intel': {
+      id: '/api/threat-intel'
+      path: '/api/threat-intel'
+      fullPath: '/api/threat-intel'
+      preLoaderRoute: typeof ApiThreatIntelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/check-url': {
+      id: '/api/check-url'
+      path: '/api/check-url'
+      fullPath: '/api/check-url'
+      preLoaderRoute: typeof ApiCheckUrlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/check-email': {
+      id: '/api/check-email'
+      path: '/api/check-email'
+      fullPath: '/api/check-email'
+      preLoaderRoute: typeof ApiCheckEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/report': {
+      id: '/api/public/report'
+      path: '/api/public/report'
+      fullPath: '/api/public/report'
+      preLoaderRoute: typeof ApiPublicReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BookmarkletRoute: BookmarkletRoute,
+  DashboardRoute: DashboardRoute,
+  EmailRoute: EmailRoute,
+  HistoryRoute: HistoryRoute,
+  LearnRoute: LearnRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiCheckEmailRoute: ApiCheckEmailRoute,
+  ApiCheckUrlRoute: ApiCheckUrlRoute,
+  ApiThreatIntelRoute: ApiThreatIntelRoute,
+  ApiPublicReportRoute: ApiPublicReportRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
