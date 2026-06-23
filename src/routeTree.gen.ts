@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as HistoryRouteImport } from './routes/history'
 import { Route as EmailRouteImport } from './routes/email'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +18,11 @@ import { Route as ApiCheckUrlRouteImport } from './routes/api/check-url'
 import { Route as ApiCheckEmailRouteImport } from './routes/api/check-email'
 import { Route as ApiPublicReportRouteImport } from './routes/api/public/report'
 
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EmailRoute = EmailRouteImport.update({
   id: '/email',
   path: '/email',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/email': typeof EmailRoute
+  '/history': typeof HistoryRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
   '/api/threat-intel': typeof ApiThreatIntelRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/email': typeof EmailRoute
+  '/history': typeof HistoryRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
   '/api/threat-intel': typeof ApiThreatIntelRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/email': typeof EmailRoute
+  '/history': typeof HistoryRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
   '/api/threat-intel': typeof ApiThreatIntelRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/email'
+    | '/history'
     | '/api/check-email'
     | '/api/check-url'
     | '/api/threat-intel'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/email'
+    | '/history'
     | '/api/check-email'
     | '/api/check-url'
     | '/api/threat-intel'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/email'
+    | '/history'
     | '/api/check-email'
     | '/api/check-url'
     | '/api/threat-intel'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   EmailRoute: typeof EmailRoute
+  HistoryRoute: typeof HistoryRoute
   ApiCheckEmailRoute: typeof ApiCheckEmailRoute
   ApiCheckUrlRoute: typeof ApiCheckUrlRoute
   ApiThreatIntelRoute: typeof ApiThreatIntelRoute
@@ -123,6 +136,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/email': {
       id: '/email'
       path: '/email'
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   EmailRoute: EmailRoute,
+  HistoryRoute: HistoryRoute,
   ApiCheckEmailRoute: ApiCheckEmailRoute,
   ApiCheckUrlRoute: ApiCheckUrlRoute,
   ApiThreatIntelRoute: ApiThreatIntelRoute,
