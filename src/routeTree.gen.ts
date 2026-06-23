@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as EmailRouteImport } from './routes/email'
@@ -20,6 +21,11 @@ import { Route as ApiCheckUrlRouteImport } from './routes/api/check-url'
 import { Route as ApiCheckEmailRouteImport } from './routes/api/check-email'
 import { Route as ApiPublicReportRouteImport } from './routes/api/public/report'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnRoute = LearnRouteImport.update({
   id: '/learn',
   path: '/learn',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/email': typeof EmailRoute
   '/history': typeof HistoryRoute
   '/learn': typeof LearnRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
   '/api/threat-intel': typeof ApiThreatIntelRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/email': typeof EmailRoute
   '/history': typeof HistoryRoute
   '/learn': typeof LearnRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
   '/api/threat-intel': typeof ApiThreatIntelRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/email': typeof EmailRoute
   '/history': typeof HistoryRoute
   '/learn': typeof LearnRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
   '/api/threat-intel': typeof ApiThreatIntelRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/email'
     | '/history'
     | '/learn'
+    | '/sitemap.xml'
     | '/api/check-email'
     | '/api/check-url'
     | '/api/threat-intel'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/email'
     | '/history'
     | '/learn'
+    | '/sitemap.xml'
     | '/api/check-email'
     | '/api/check-url'
     | '/api/threat-intel'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/email'
     | '/history'
     | '/learn'
+    | '/sitemap.xml'
     | '/api/check-email'
     | '/api/check-url'
     | '/api/threat-intel'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   EmailRoute: typeof EmailRoute
   HistoryRoute: typeof HistoryRoute
   LearnRoute: typeof LearnRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiCheckEmailRoute: typeof ApiCheckEmailRoute
   ApiCheckUrlRoute: typeof ApiCheckUrlRoute
   ApiThreatIntelRoute: typeof ApiThreatIntelRoute
@@ -162,6 +175,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn': {
       id: '/learn'
       path: '/learn'
@@ -242,6 +262,7 @@ const rootRouteChildren: RootRouteChildren = {
   EmailRoute: EmailRoute,
   HistoryRoute: HistoryRoute,
   LearnRoute: LearnRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiCheckEmailRoute: ApiCheckEmailRoute,
   ApiCheckUrlRoute: ApiCheckUrlRoute,
   ApiThreatIntelRoute: ApiThreatIntelRoute,
