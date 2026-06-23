@@ -54,10 +54,18 @@ export async function scanUrl(input: string): Promise<UrlScanResult> {
   const anyMalicious = providers.some((p) => p.status === "malicious");
   if (anyMalicious) score = Math.max(score, 92);
 
+  // Split-label brand impersonation is treated as Critical.
+  if (heur.signals.some((s) => s.id === "brand-split")) {
+    score = Math.max(score, 91);
+  }
+
   // Safe requires: trusted reg domain + HTTPS + no positive-weight signals
   const hasRiskSignal = allSignals.some((s) => s.weight > 0);
   if (heur.trusted && heur.url.protocol === "https:" && !hasRiskSignal && !anyMalicious) {
     score = Math.min(score, 10);
+  } else if (heur.trusted && hasRiskSignal) {
+    // Trusted domain but with at least one risk signal (e.g. no HTTPS) → never Safe.
+    score = Math.max(score, 28);
   } else if (!heur.trusted) {
     // Never auto-mark an unknown .com as Safe — floor at "Low Risk".
     score = Math.max(score, 26);
