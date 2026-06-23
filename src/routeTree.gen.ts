@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as EmailRouteImport } from './routes/email'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiThreatIntelRouteImport } from './routes/api/threat-intel'
 import { Route as ApiCheckUrlRouteImport } from './routes/api/check-url'
 import { Route as ApiCheckEmailRouteImport } from './routes/api/check-email'
 import { Route as ApiPublicReportRouteImport } from './routes/api/public/report'
 
+const EmailRoute = EmailRouteImport.update({
+  id: '/email',
+  path: '/email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,6 +49,7 @@ const ApiPublicReportRoute = ApiPublicReportRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/email': typeof EmailRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
   '/api/threat-intel': typeof ApiThreatIntelRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/email': typeof EmailRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
   '/api/threat-intel': typeof ApiThreatIntelRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/email': typeof EmailRoute
   '/api/check-email': typeof ApiCheckEmailRoute
   '/api/check-url': typeof ApiCheckUrlRoute
   '/api/threat-intel': typeof ApiThreatIntelRoute
@@ -67,6 +76,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/email'
     | '/api/check-email'
     | '/api/check-url'
     | '/api/threat-intel'
@@ -74,6 +84,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/email'
     | '/api/check-email'
     | '/api/check-url'
     | '/api/threat-intel'
@@ -81,6 +92,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/email'
     | '/api/check-email'
     | '/api/check-url'
     | '/api/threat-intel'
@@ -89,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EmailRoute: typeof EmailRoute
   ApiCheckEmailRoute: typeof ApiCheckEmailRoute
   ApiCheckUrlRoute: typeof ApiCheckUrlRoute
   ApiThreatIntelRoute: typeof ApiThreatIntelRoute
@@ -97,6 +110,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/email': {
+      id: '/email'
+      path: '/email'
+      fullPath: '/email'
+      preLoaderRoute: typeof EmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -137,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EmailRoute: EmailRoute,
   ApiCheckEmailRoute: ApiCheckEmailRoute,
   ApiCheckUrlRoute: ApiCheckUrlRoute,
   ApiThreatIntelRoute: ApiThreatIntelRoute,
