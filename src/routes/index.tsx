@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, Loader2, Search, Shield, Sparkles, Zap } from "lucide-react";
 import { toast } from "sonner";
 import { scanUrls } from "@/lib/phish/client";
@@ -30,6 +30,29 @@ function Index() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<UrlScanResult[]>([]);
+
+  // Bookmarklet entry: ?u=<url>
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const p = new URLSearchParams(window.location.search);
+    const u = p.get("u");
+    if (u) {
+      setInput(u);
+      // auto-scan
+      void (async () => {
+        setLoading(true);
+        try {
+          const r = await scanUrls([u]);
+          setResults(r);
+          saveScans(r);
+        } catch (e) {
+          toast.error("Scan failed", { description: (e as Error).message });
+        } finally {
+          setLoading(false);
+        }
+      })();
+    }
+  }, []);
 
   const onScan = async () => {
     const urls = input.split(/\r?\n/).map((s) => s.trim()).filter(Boolean);

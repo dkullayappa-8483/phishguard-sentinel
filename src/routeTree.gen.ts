@@ -13,6 +13,7 @@ import { Route as LearnRouteImport } from './routes/learn'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as EmailRouteImport } from './routes/email'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as BookmarkletRouteImport } from './routes/bookmarklet'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiThreatIntelRouteImport } from './routes/api/threat-intel'
 import { Route as ApiCheckUrlRouteImport } from './routes/api/check-url'
@@ -37,6 +38,11 @@ const EmailRoute = EmailRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookmarkletRoute = BookmarkletRouteImport.update({
+  id: '/bookmarklet',
+  path: '/bookmarklet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -67,6 +73,7 @@ const ApiPublicReportRoute = ApiPublicReportRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bookmarklet': typeof BookmarkletRoute
   '/dashboard': typeof DashboardRoute
   '/email': typeof EmailRoute
   '/history': typeof HistoryRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bookmarklet': typeof BookmarkletRoute
   '/dashboard': typeof DashboardRoute
   '/email': typeof EmailRoute
   '/history': typeof HistoryRoute
@@ -90,6 +98,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bookmarklet': typeof BookmarkletRoute
   '/dashboard': typeof DashboardRoute
   '/email': typeof EmailRoute
   '/history': typeof HistoryRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/bookmarklet'
     | '/dashboard'
     | '/email'
     | '/history'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/bookmarklet'
     | '/dashboard'
     | '/email'
     | '/history'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/bookmarklet'
     | '/dashboard'
     | '/email'
     | '/history'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BookmarkletRoute: typeof BookmarkletRoute
   DashboardRoute: typeof DashboardRoute
   EmailRoute: typeof EmailRoute
   HistoryRoute: typeof HistoryRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bookmarklet': {
+      id: '/bookmarklet'
+      path: '/bookmarklet'
+      fullPath: '/bookmarklet'
+      preLoaderRoute: typeof BookmarkletRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -217,6 +237,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BookmarkletRoute: BookmarkletRoute,
   DashboardRoute: DashboardRoute,
   EmailRoute: EmailRoute,
   HistoryRoute: HistoryRoute,
